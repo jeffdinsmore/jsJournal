@@ -6,15 +6,16 @@ import { Entry } from './journal.js';
 import { report } from './journal.js';
 
 $(document).ready(function() {
-  alert("here");
   $("#journal-entry").submit(function(event) {
     event.preventDefault();
-    alert("in");
     let title = $("input#journal-title").val();
     let body = $("input#journal-body").val();
 
+    // console.log(body);
     let text = new Entry(title, body);
+    // console.log(text);
     let result = report(text);
+    // console.log(result);
 
     $("#result").html(result);
   });
