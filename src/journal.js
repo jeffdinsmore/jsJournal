@@ -3,6 +3,8 @@ function Journal() {
   this.entries = []
 }
 
+let journal = new Journal();
+
 // add entry to journal
 Journal.prototype.addEntry = function(entry) {
   entry.wordCount = this.wordCounter(entry);
@@ -13,7 +15,6 @@ Journal.prototype.addEntry = function(entry) {
   this.entries.push(entry);
 }
 
-// add 
 // count words
 Journal.prototype.wordCount = function(entry) {
   let count = entry.split(" ").length;
@@ -37,13 +38,33 @@ Journal.prototype.countLetter = function(entry) {
 
 // return first sentence or first 8 words
 Journal.prototype.getTeaser = function(entry) {
-  
+  let words = entry.split(" ");
+  let newArray = [];
+  for (let i = 0; i < 8; i++) {
+    if (/[!.?]/g.test(words[i])) {
+      i = 8;
+    } else {
+      newArray.push(words[i]);
+    }
+  }
+  let teaser = newArray.join(" ");
+  return teaser;
 }
 
 // business logic Entry
-export function Entry() {
+export function Entry(title, body) {
   this.title = title,
   this.body = body
 }
 
-let journal = new Journal();
+export function report(entry) {
+  let myEntry = journal.addEntry(entry);
+
+  let message = "<p>Title " + myEntry.title + "<br>" + myEntry.body + "<br>";
+  message += "Number of words is " + myEntry.words + "<br>";
+  message += "Number of vowels is " + myEntry.vowels + "<br>";
+  message += "Number of consonants is " + myEntry.consonants + "<br>";
+  message += "the Teaser is " + myEntry.teaser;
+
+  return message;
+}
